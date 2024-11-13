@@ -1,0 +1,86 @@
+syntax = "proto2";
+// Request a truck per package delivery request, i.e. called every time a new package is loaded on the truck
+// shipid = package_id = orderid
+
+message request_truck{
+	required int64 package_id = 1;
+	required int64 warehouse_id = 2;
+	optional string ups_user  = 3;
+	required int64 warehouse_x = 4;
+	required int64 warehouse_y = 5;
+	required int64 dest_x = 6;
+	required int64 dest_y = 7;
+	repeated Item items = 8;
+} 
+
+message Item{
+	required string name = 1;
+	required int64 quantity = 2;
+}
+
+message load_package{
+	required int64 package_id = 1;
+	required int64 dest_x = 2;
+	required int64 dest_y = 3;
+	required int64 truck_id = 4;
+}
+
+message request_destination_change {
+	required int64 package_id = 1;
+	required int64 new_dest_x = 2;
+	required int64 new_dest_y = 3;
+}
+
+message AUCommands {
+	optional bool connected = 1; 
+	optional request_truck truck_req = 2;
+	optional load_package load_pack = 3;
+	optional request_destination_change dest_ch = 4;
+	optional bool disconnect = 5;
+}
+
+//ups->amazon
+message response_truck_arrive {
+	required int64 truck_id = 1;
+	required int64 warehouse_x = 2;
+	required int64 warehouse_y = 3;
+	required int64 warehouse_id =4;
+	required int64 package_id = 5;
+}
+
+message start_deliver{
+	repeated int64 package_id = 1;
+}
+
+message delivered_package {
+	required int64 truck_id = 1;
+	required int64 package_id = 2;
+	required int64 dest_x = 3;
+	required int64 dest_y = 4;
+
+} 
+
+message response_destination_changed {
+	required int64 package_id = 1;
+	required int64 new_dest_x = 2;
+	required int64 new_dest_y = 3;
+	required bool success = 4;
+} 
+
+message msg_destination_changed {
+	required string ups_user = 1;
+	required int64 package_id = 2;
+	required int64 new_dest_x = 3;
+	required int64 new_dest_y = 4;
+}
+
+message UACommands {
+	optional int64 world_id = 1;
+	optional response_truck_arrive  truck_arrive = 2;
+	optional start_deliver start_deliver = 3;
+	optional delivered_package package_delivered = 4;
+	optional response_destination_changed dest_response = 5;
+	optional msg_destination_changed dest_notification = 6;
+	optional bool disconnect = 7;
+}
+

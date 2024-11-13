@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Page Title -->
+<h1>My Cart</h1>
+
+<style>
+    #cart-table {
+        width: 100%;
+        border-collapse: collapse; 
+    }
+    #cart-table th, #cart-table td {
+        border: 1px solid #ddd;
+        padding: 8px; /* Spacing inside each cell */
+        text-align: left; /* Align text to the left */
+    }
+    #cart-table th {
+        background-color: #f2f2f2; 
+    }
+    #cart-table tr:nth-child(even) {
+        background-color: #f9f9f9; 
+    }
+    #cart-table tr:hover {
+        background-color: #f1f1f1; /* Highlight on hover */
+    }
+</style>
+
+<table id="cart-table">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if cart.items|length == 0 %}
+            <tr>
+                <td colspan="4"><strong>Your cart is empty</strong></td>
+            </tr>
+        {% endif %}
+        {% for product, details in cart.items %}
+            <tr>
+                <td>{{ product }}</td>
+                <td>{{ details.quantity }}</td>
+                <td>{{ details.price|floatformat:2 }}</td>
+                <td>{{ details.subtotal|floatformat:2 }}</td>
+                
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<form action="{% url 'submit_order' %}" method="post"> 
+    {% csrf_token %}
+    <div>
+        <label for="destination_x">Destination x:</label>
+        <input type="text" id="destination_x" name="destination_x" required>
+    </div>
+    <div>
+        <label for="destination_y">Destination y:</label>
+        <input type="text" id="destination_y" name="destination_y" required>
+    <div>
+        <label for="ups_account">UPS Account Number (optional):</label>
+        <input type="text" id="ups_account" name="ups_account">
+    </div>
+    <button type="submit">Checkout</button>
+</form>
+
+{% endblock content %}
+

@@ -1,0 +1,22 @@
+1. Flask cannot be the different file with the server.py, otherwise the world keep 
+   consider it as AConnect.
+2. Send to world about topack, our logic is select all the orders whose status is 
+   processing, so it keeps sending the old order we test as the begining which does
+   not have whnum, so the world keep send us error message.
+3. Fetchone cannot do twice, even in print function. Otherwise, the database would be
+   wrong.
+4. Web and server use Flask can make the message delivery much easier, at first we try 
+   to use socket and protocol buffer to connect the Django website, but we met lots of 
+   errors. And the message handle need to be decoded each time, so we change the method 
+   to Flask which makes it easier and straighter.
+5. Seqnum cannot be as same as the world already handled, otherwise it would be very slow.
+6. Packing and loading takes a very long time. We think it's because we use lock and while
+   loop to handle "flakiness" and track seqnum and ack.
+7. Change destination request does not immediately shows the success status of the 
+   request. We need wait for UPS to tell us it changes successfully, then we can change the
+   destination, otherwise the destination cannot be changed.
+8. In docker, it might happen the situation that server cannot connect to db, that's because
+   server start before the db, so we need to wait the db to be successful set up and then run
+   server and website.
+9. Lingering postgres process from previous runs could cause docker db container failing to start,
+as the port 5432 has already been used. Therefore, we chose to change the port mapping to "5433:5432".

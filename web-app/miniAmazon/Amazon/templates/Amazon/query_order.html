@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- <h1>Query Order Status!</h1>
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div>
+        <label>{{ field.label }}</label>
+        {{ field }}
+    </div>
+    {% endfor %}
+</form> -->
+<h1>Query Order Status!</h1>
+<!-- Display messages -->
+{% if messages %}
+    {% for message in messages %}
+        <div>{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div>
+        <label>{{ field.label }}</label>
+        {{ field }}
+    </div>
+    {% endfor %}
+    <button type="submit">Query Status</button>
+</form>
+
+{% endblock content %}

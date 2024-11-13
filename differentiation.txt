@@ -1,0 +1,14 @@
+Product Differentiation
+1. We have register, login and logout function which can help different users to get into their own 
+   page. Everyone can access the product_list page, but only when user login they can submit order.
+2. We add a connected sign in AUCommands to remind UPS we have successful connected.
+3. In our query status part, we can search the status of our package not only the package status but
+   also have the time of each status
+4. We add change destination to Amazon side, and give it two ways to modify: 
+    (a)Amazon can change the order destination if user want to change and then send the 
+    request to UPS
+    (b)UPS send a message to let Amazon know the destination is changed.
+   As long as the package is not delivered, we can change the destination in both UPS and Amazon side.
+5. We have a cart in our website where user can add items to it and remove it. When user found things
+   they want in product_list, then they can add them to cart. As long as user submit in cart, the order
+   is created.
