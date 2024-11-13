@@ -1,4 +1,4 @@
-# ERSS-project-kl460-yh398
+# Amazon simulation
 Members
 Kexin Liao(kl460)
 Yiwei He(yh398)
